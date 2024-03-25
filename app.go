@@ -13,5 +13,6 @@ func main() {
 	fmt.Println()
 
 	Lab.DeBroile()
-	fmt.Println()
+	Lab.Dielektryk()
+
 }

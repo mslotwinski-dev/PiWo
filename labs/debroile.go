@@ -5,8 +5,6 @@ import (
 
 	fmt "fmt"
 	math "math"
-
-	"github.com/xuri/excelize/v2"
 )
 
 func DeBroile() {
@@ -47,10 +45,10 @@ func DeBroile() {
 	d_3 := (r * h / SQ_21.A) * math.Sqrt(2/(m_e*e))
 	d_4 := (2 * r * h / SQ_22.A) * math.Sqrt(2/(m_e*e))
 
-	ud_1 := (r * h * SQ_11.UA / (math.Pow(SQ_11.A, 2))) * math.Sqrt(2/(m_e*e))
-	ud_2 := (r * h * SQ_12.UA / (math.Pow(SQ_12.A, 2))) * math.Sqrt(2/(m_e*e))
-	ud_3 := (r * h * SQ_21.UA / (math.Pow(SQ_21.A, 2))) * math.Sqrt(2/(m_e*e))
-	ud_4 := (r * h * SQ_22.UA / (math.Pow(SQ_22.A, 2))) * math.Sqrt(2/(m_e*e))
+	ud_1 := (r*h*SQ_11.UA/(math.Pow(SQ_11.A, 2)))*math.Sqrt(2/(m_e*e)) + (h*0.0003/(math.Pow(SQ_11.A, 1)))*math.Sqrt(2/(m_e*e))
+	ud_2 := (2*r*h*SQ_12.UA/(math.Pow(SQ_12.A, 2)))*math.Sqrt(2/(m_e*e)) + (2*h*0.0003/(math.Pow(SQ_12.A, 1)))*math.Sqrt(2/(m_e*e))
+	ud_3 := (r*h*SQ_21.UA/(math.Pow(SQ_21.A, 2)))*math.Sqrt(2/(m_e*e)) + (h*0.0003/(math.Pow(SQ_21.A, 1)))*math.Sqrt(2/(m_e*e))
+	ud_4 := (2*r*h*SQ_22.UA/(math.Pow(SQ_22.A, 2)))*math.Sqrt(2/(m_e*e)) + (2*h*0.0003/(math.Pow(SQ_22.A, 1)))*math.Sqrt(2/(m_e*e))
 
 	fmt.Printf("d1 = %0.2f (%0.2f)\n", d_1*1e12, ud_1*1e12)
 	fmt.Printf("d2 = %0.2f (%0.2f)\n", d_2*1e12, ud_2*1e12)
@@ -62,71 +60,9 @@ func DeBroile() {
 	// PiWo.PlotSquares("DeBroile", "U^-1/2", "D_21", U_2, D_21, SQ_21)
 	// PiWo.PlotSquares("DeBroile", "U^-1/2", "D_22", U_2, D_22, SQ_22)
 
-	f := excelize.NewFile()
-	defer func() {
-		if err := f.Close(); err != nil {
-			fmt.Println(err)
-		}
-	}()
+	PiWo.Excel("DeBroile", [][]float64{U_1, D_11, D_12, U_D1, X_1, U_2, D_21, D_22, U_D2, X_2})
 
-	index, err := f.NewSheet("PiWo")
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
+	// fmt.Println(h * 10e12 / math.Sqrt(2*e*m_e*6000))
 
-	f.SetCellValue("PiWo", "A1", "U [V]")
-	for i, v := range U_1 {
-		f.SetCellValue("PiWo", "A"+fmt.Sprint(i+2), v)
-	}
-
-	f.SetCellValue("PiWo", "B1", "D1 [m]")
-	for i, v := range D_11 {
-		f.SetCellValue("PiWo", "B"+fmt.Sprint(i+2), v)
-	}
-
-	f.SetCellValue("PiWo", "C1", "D2 [m]")
-	for i, v := range D_12 {
-		f.SetCellValue("PiWo", "C"+fmt.Sprint(i+2), v)
-	}
-
-	f.SetCellValue("PiWo", "D1", "UD [m]")
-	for i, v := range U_D1 {
-		f.SetCellValue("PiWo", "D"+fmt.Sprint(i+2), v)
-	}
-
-	f.SetCellValue("PiWo", "E1", "U^-1/2 [V^-1/2]")
-	for i, v := range X_1 {
-		f.SetCellValue("PiWo", "E"+fmt.Sprint(i+2), v)
-	}
-
-	f.SetCellValue("PiWo", "F1", "U [V]")
-	for i, v := range U_2 {
-		f.SetCellValue("PiWo", "F"+fmt.Sprint(i+2), v)
-	}
-
-	f.SetCellValue("PiWo", "G1", "D1 [m]")
-	for i, v := range D_21 {
-		f.SetCellValue("PiWo", "G"+fmt.Sprint(i+2), v)
-	}
-
-	f.SetCellValue("PiWo", "H1", "D2 [m]")
-	for i, v := range D_22 {
-		f.SetCellValue("PiWo", "H"+fmt.Sprint(i+2), v)
-	}
-
-	f.SetCellValue("PiWo", "I1", "UD [m]")
-	for i, v := range U_D2 {
-		f.SetCellValue("PiWo", "I"+fmt.Sprint(i+2), v)
-	}
-
-	f.SetCellValue("PiWo", "j1", "U^-1/2 [V^-1/2]")
-	for i, v := range X_2 {
-		f.SetCellValue("PiWo", "j"+fmt.Sprint(i+2), v)
-	}
-
-	f.SetActiveSheet(index)
-	if err := f.SaveAs("assets/excel/DeBroile.xlsx"); err != nil {
-		fmt.Println(err)
-	}
+	fmt.Println()
 }

@@ -5,8 +5,8 @@ import (
 	"math"
 )
 
-func Init() {
-	fmt.Println("Huj")
+func Start(nr int, title string) {
+	fmt.Printf("\u001B[33mDoświadczenie %d:\u001B[0m %s\n", nr, title)
 }
 
 func SI(arr []float64, i float64) []float64 {
@@ -63,4 +63,16 @@ func SquaresAB(x []float64, y []float64, uy []float64) Squares {
 	ub := math.Sqrt(((S_5) / (S_1*S_5 - math.Pow(S_2, 2))))
 
 	return Squares{a, ua, b, ub}
+}
+
+func Sin(x float64) float64 {
+	return math.Sin(x * math.Pi / 180)
+}
+
+func Cos(x float64) float64 {
+	return math.Cos(x * math.Pi / 180)
+}
+
+func Tg(x float64) float64 {
+	return Sin(x) / Cos(x)
 }
