@@ -14,5 +14,6 @@ func main() {
 
 	Lab.DeBroile()
 	Lab.Dielektryk()
+	Lab.Laminarny()
 
 }

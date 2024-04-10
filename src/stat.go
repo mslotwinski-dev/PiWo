@@ -1,26 +1,42 @@
 package src
 
 import (
-	fmt "fmt"
 	"math"
 )
-
-func Start(nr int, title string) {
-	fmt.Printf("\u001B[33mDoświadczenie %d:\u001B[0m %s\n", nr, title)
-}
-
-func SI(arr []float64, i float64) []float64 {
-	for n := range arr {
-		arr[n] *= i
-	}
-	return arr
-}
 
 type Squares struct {
 	A  float64
 	UA float64
 	B  float64
 	UB float64
+}
+
+func Mean(x []float64) float64 {
+	m := 0.0
+
+	for _, v := range x {
+		m += v
+	}
+
+	m /= float64(len(x))
+
+	return m
+}
+
+func SDev(x []float64) float64 {
+	m := Mean(x)
+	values := 0.0
+	for i := 0; i < len(x); i++ {
+		values += math.Pow(x[i]-m, 2)
+	}
+
+	variance := values / (float64(len(x)) - 1)
+
+	return math.Sqrt(variance)
+}
+
+func SDevMean(x []float64) float64 {
+	return SDev(x) / math.Sqrt(float64(len(x)))
 }
 
 func SquaresA(x []float64, y []float64, uy []float64) Squares {
@@ -36,6 +52,10 @@ func SquaresA(x []float64, y []float64, uy []float64) Squares {
 	ua := math.Sqrt(1 / m)
 
 	return Squares{a, ua, 0, 0}
+}
+
+func Uncertainty(x []float64, b float64) float64 {
+	return math.Sqrt(math.Pow(SDevMean(x), 2) + math.Pow(b, 2))
 }
 
 func SquaresAB(x []float64, y []float64, uy []float64) Squares {
@@ -63,16 +83,4 @@ func SquaresAB(x []float64, y []float64, uy []float64) Squares {
 	ub := math.Sqrt(((S_5) / (S_1*S_5 - math.Pow(S_2, 2))))
 
 	return Squares{a, ua, b, ub}
-}
-
-func Sin(x float64) float64 {
-	return math.Sin(x * math.Pi / 180)
-}
-
-func Cos(x float64) float64 {
-	return math.Cos(x * math.Pi / 180)
-}
-
-func Tg(x float64) float64 {
-	return Sin(x) / Cos(x)
 }

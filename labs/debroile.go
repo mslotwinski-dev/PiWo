@@ -8,7 +8,7 @@ import (
 )
 
 func DeBroile() {
-	fmt.Println("\u001B[33mDoświadczenie 1:\u001B[0m Fale De Broile'a")
+	PiWo.Start(1, "Fale De Broile'a")
 
 	const r = 127e-3
 
