@@ -15,5 +15,8 @@ func main() {
 	Lab.DeBroile()
 	Lab.Dielektryk()
 	Lab.Laminarny()
-
+	Lab.DrganiaRLC()
+	Lab.Interferencja()
+	Lab.GammaOslabienie()
+	Lab.Magnetyczne()
 }

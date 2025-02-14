@@ -79,8 +79,8 @@ func SquaresAB(x []float64, y []float64, uy []float64) Squares {
 
 	a := (S_1*S_2 - S_3*S_4) / (S_1*S_5 - math.Pow(S_3, 2))
 	ua := math.Sqrt((S_1) / (S_1*S_5 - math.Pow(S_3, 2)))
-	b := (S_5*S_4 - S_3*S_2) / (S_1*S_5 - math.Pow(S_2, 2))
-	ub := math.Sqrt(((S_5) / (S_1*S_5 - math.Pow(S_2, 2))))
+	b := (S_5*S_4 - S_3*S_2) / (S_1*S_5 - math.Pow(S_3, 2))
+	ub := math.Sqrt(((S_5) / (S_1*S_5 - math.Pow(S_3, 2))))
 
 	return Squares{a, ua, b, ub}
 }
